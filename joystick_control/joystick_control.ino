@@ -14,6 +14,9 @@ const int threshold = 100;
 #define RIGHT_DIR_PIN 48
 #define RIGHT_ENABLE_PIN 62
 
+#define TOOL_CHANGE_POWER 17
+// #define 23
+
 void setup() {
   Serial.begin(9600);
   // initialize stepper motors
@@ -30,6 +33,9 @@ void setup() {
 
   // initialize joystick button
   pinMode(SW, INPUT_PULLUP);
+  //initialize tool change motor
+  pinMode(TOOL_CHANGE_POWER, OUTPUT);
+
 }
 
 void loop() {
@@ -64,8 +70,9 @@ void loop() {
   }
 
   if (switchState == LOW) {
-    Serial.println("Switch clicked!");
-    delay(200);
+    // Serial.println("Switch clicked!");
+    changeTool();
+    // delay(200);
   }
 
   if (!moved) {
@@ -83,3 +90,12 @@ void moveBoth(bool leftDir, bool rightDir) {
   digitalWrite(LEFT_STEP_PIN, LOW);
   digitalWrite(RIGHT_STEP_PIN, LOW);
 }
+
+void changeTool() {
+  Serial.println("Joystick clicked!");
+  digitalWrite(TOOL_CHANGE_POWER, HIGH);
+  delay(400);
+  digitalWrite(TOOL_CHANGE_POWER, LOW);
+}
+
+
