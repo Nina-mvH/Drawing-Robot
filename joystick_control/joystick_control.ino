@@ -79,9 +79,7 @@ void moveBoth(bool leftDir, bool rightDir) {
 
   digitalWrite(LEFT_STEP_PIN, HIGH);
   digitalWrite(RIGHT_STEP_PIN, HIGH);
-  delayMicroseconds(400);
 
   digitalWrite(LEFT_STEP_PIN, LOW);
   digitalWrite(RIGHT_STEP_PIN, LOW);
-  delayMicroseconds(400);
 }
