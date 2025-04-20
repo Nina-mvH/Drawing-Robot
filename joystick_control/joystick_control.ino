@@ -15,7 +15,10 @@ const int threshold = 100;
 #define RIGHT_ENABLE_PIN 62
 
 #define TOOL_CHANGE_POWER 17
-// #define 23
+
+// #define BUTTON_PIN 23
+// int buttonState = 0;
+
 
 void setup() {
   Serial.begin(9600);
@@ -33,8 +36,13 @@ void setup() {
 
   // initialize joystick button
   pinMode(SW, INPUT_PULLUP);
+
   //initialize tool change motor
   pinMode(TOOL_CHANGE_POWER, OUTPUT);
+
+  //button
+  // pinMode(BUTTON_PIN, INPUT);
+  
 
 }
 
@@ -70,14 +78,25 @@ void loop() {
   }
 
   if (switchState == LOW) {
-    // Serial.println("Switch clicked!");
+    Serial.println("Switch clicked!");
     changeTool();
-    // delay(200);
+    delay(200);
   }
 
-  if (!moved) {
-    delay(10);  // pause when idle
-  }
+  // // read the state of the pushbutton value:
+  // buttonState = digitalRead(BUTTON_PIN);
+
+  // // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+  // if (buttonState == HIGH) {
+  //   Serial.println("Button Pressed!");
+  // }
+  // } else {
+  //   Serial.println("No Press!");
+  // }
+
+  // if (!moved) {
+  //   delay(10);  // pause when idle
+  // }
 }
 
 void moveBoth(bool leftDir, bool rightDir) {
