@@ -94,9 +94,9 @@ void loop() {
   //   Serial.println("No Press!");
   // }
 
-  // if (!moved) {
-  //   delay(10);  // pause when idle
-  // }
+  if (!moved) {
+    delay(10);  // pause when idle
+  }
 }
 
 void moveBoth(bool leftDir, bool rightDir) {
