@@ -30,8 +30,8 @@ void setup() {
   pinMode(SW, INPUT_PULLUP); //joystick
 
   //STEPPER MOTORS
-  motorA.setSpeed(255); // RPM
-  motorB.setSpeed(255); // RPM
+  motorA.setSpeed(1000); // RPM
+  motorB.setSpeed(1000); // RPM
 
   //TOOL CHANGER DC
   pinMode(toolChangeF, OUTPUT); //establishes the DC motor forward direction pin as an output
@@ -54,6 +54,31 @@ void loop() {
 
   String direction = ""; //for printing/debugging
   bool moved = false;
+
+
+  // //straight up
+  // if (yVal < (512 - threshold) && xVal == (512 - threshold)) {
+  //   direction += "Up ";
+  //   motorA.step(1);
+  //   motorB.step(-1);
+  //   moved = true;
+  // //straight down
+
+  //straight left
+
+  //stright right
+
+  //up-left
+
+  //up-right
+
+  //down-left
+
+  //down-right
+
+
+
+
 
   //check direction (l/r) for the x axis and rotate stepper motors
   if (xVal < (512 - threshold)) {
@@ -111,7 +136,7 @@ void loop() {
 void changeTool() {
   Serial.println("Change tool");
   digitalWrite(toolChangeF, HIGH); //send HIGH to the pin associated with rotating the DC motor forwards
-  delay(400); //pause to allow for the tool to change
+  delay(800); //pause to allow for the tool to change
   digitalWrite(toolChangeF, LOW); //send LOW to the pin associated with rotating the DC motor forwards
 }
 
