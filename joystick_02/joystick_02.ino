@@ -22,7 +22,7 @@ const int servoSignal = 9; //the pin that the servo motor is attached to
 bool up; //a boolean to keep track of the servo motor's arm position
 
 //BUTTON FOR ACTIVATING THE SERVO
-const int buttonPin = 2;  // the number of the button pin
+const int buttonPin = 31;  // the number of the button pin
 int buttonState = 0;  // variable for reading the button status
 
 void setup() {
@@ -97,8 +97,10 @@ void loop() {
   
   //https://docs.arduino.cc/built-in-examples/digital/Button/
   buttonState = digitalRead(buttonPin);// read the state of the pushbutton value
-  if (buttonState == HIGH) {
+  if (buttonState == LOW) {
+    Serial.println("Button clicked!");
     changeLines();
+    delay(50);
   }
 
   // delay(50);
