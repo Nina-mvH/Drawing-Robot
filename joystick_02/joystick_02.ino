@@ -68,22 +68,22 @@ void loop() {
   //check direction (l/r) for the x axis and rotate stepper motors
   if (yVal > (512 + threshold)) {
     direction += "Left ";
-    stepA +=4;
-    stepB +=4;
+    stepA +=2;
+    stepB +=2;
   } else if (yVal < (512 - threshold)) {
     direction += "Right ";
-    stepA -=4;
-    stepB -=4;
+    stepA -=2;
+    stepB -=2;
   }
   //check direction (u/d) for the y axis and rotate stepper motors
   if (xVal < (512 - threshold)) {
     direction += "Up ";
-    stepA +=4;
-    stepB -=4;
+    stepA +=1;
+    stepB -=1;
   } else if (xVal > (512 + threshold)) {
     direction += "Down ";
-    stepA -=4;
-    stepB +=4;
+    stepA -=1;
+    stepB +=1;
   }
 
 
