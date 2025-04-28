@@ -6,11 +6,17 @@ const int VRx = A0;
 const int VRy = A1; 
 const int SW = 7; 
 const int threshold = 100; //direction threshold
+int xVal; //read how far joystick is pushed along the x axis
+int yVal; //read how far joystick is pushed along the y axis
+int switchState; //read if the joystick has been pressed down
 
 //STEPPER MOTORS FOR MOVING THE PLOTTER
 const int stepsPerRevolution = 200;   
 Stepper motorA(stepsPerRevolution, 2, 3, 4, 5);
 Stepper motorB(stepsPerRevolution, 8, 9, 10, 11);
+bool moved; //keep track if plotter moved
+int stepA; //step count to be sent to motorA
+int stepB; //step count to be sent to motorB
 
 //DC MOTOR FOR CHANGING TOOLS
 const int toolChangeF = 30; 
@@ -48,53 +54,48 @@ void setup() {
 
 
 void loop() {
-  int xVal = analogRead(VRx); //read how far joystick is pushed along the x axis
-  int yVal = analogRead(VRy); //read how far joystick is pushed along the y axis
-  int switchState = digitalRead(SW); //read if the joystick has been pressed down
+  xVal = analogRead(VRx); //read how far joystick is pushed along the x axis
+  yVal = analogRead(VRy); //read how far joystick is pushed along the y axis
+  switchState = digitalRead(SW); //read if the joystick has been pressed down
 
   String direction = ""; //for printing/debugging
-  bool moved = false;
+  moved = false;
 
-  int stepA = 0;
-  int stepB = 0;
+  stepA = 0;
+  stepB = 0;
 
 
   //check direction (l/r) for the x axis and rotate stepper motors
-  if (xVal < (512 - threshold)) {
+  if (yVal > (512 + threshold)) {
     direction += "Left ";
-    stepA +=1;
-    stepB +=1;
-    // moved = true;
-  } else if (xVal > (512 + threshold)) {
+    stepA +=4;
+    stepB +=4;
+  } else if (yVal < (512 - threshold)) {
     direction += "Right ";
-    stepA -=1;
-    stepB -=1;
-    // moved = true;
+    stepA -=4;
+    stepB -=4;
+  }
+  //check direction (u/d) for the y axis and rotate stepper motors
+  if (xVal < (512 - threshold)) {
+    direction += "Up ";
+    stepA +=4;
+    stepB -=4;
+  } else if (xVal > (512 + threshold)) {
+    direction += "Down ";
+    stepA -=4;
+    stepB +=4;
   }
 
-  //check direction (u/d) for the y axis and rotate stepper motors
-  if (yVal < (512 - threshold)) {
-    direction += "Up ";
-    stepA +=1;
-    stepB -=1;
-    // moved = true;
-  } else if (yVal > (512 + threshold)) {
-    direction += "Down ";
-    stepA -=1;
-    stepB +=1;
-    // moved = true;
-  }
 
   if ((stepA != 0) || (stepB != 0)) {
     motorA.step(stepA);
     motorB.step(stepB);
     moved = true;
   }
-
   if (moved) {
     Serial.print("Direction: ");
     Serial.println(direction);
-    delay(5);
+    // delay(3);
   }
 
   //check if the joystick button was pushed
@@ -120,10 +121,9 @@ void loop() {
 void changeTool() {
   Serial.println("Change tool");
   digitalWrite(toolChangeF, HIGH); //send HIGH to the pin associated with rotating the DC motor forwards
-  // delay(1000); //pause to allow for the tool to change
-  // digitalWrite(toolChangeF, LOW); //send LOW to the pin associated with rotating the DC motor forwards
+  delay(1000); //pause to allow for the tool to change
+  digitalWrite(toolChangeF, LOW); //send LOW to the pin associated with rotating the DC motor forwards
 }
-
 
 
 //method to either lift/lower the plotter to draw seperate lines
