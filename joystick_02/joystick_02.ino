@@ -18,7 +18,7 @@ const int toolChangeB = 32;
 
 //SERVO FOR LIFTING THE PEN
 Servo myservo; //initialize myservo as a Servo object
-const int servoSignal = 9; //the pin that the servo motor is attached to 
+const int servoSignal = 33; //the pin that the servo motor is attached to 
 bool up; //a boolean to keep track of the servo motor's arm position
 
 //BUTTON FOR ACTIVATING THE SERVO
@@ -125,7 +125,7 @@ void loop() {
   if (buttonState == LOW) {
     Serial.println("Button clicked!");
     changeLines();
-    delay(50);
+    delay(380);
   }
 
   // delay(50);
@@ -136,7 +136,7 @@ void loop() {
 void changeTool() {
   Serial.println("Change tool");
   digitalWrite(toolChangeF, HIGH); //send HIGH to the pin associated with rotating the DC motor forwards
-  delay(800); //pause to allow for the tool to change
+  delay(1000); //pause to allow for the tool to change
   digitalWrite(toolChangeF, LOW); //send LOW to the pin associated with rotating the DC motor forwards
 }
 
